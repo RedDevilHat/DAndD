@@ -8,7 +8,9 @@ framework:
     translator: { fallbacks: [ru] }
     # Enables session support. Note that the session will ONLY be started if you read or write from it.
     # Remove or comment this section to explicitly disable session support.
-    #session:
+    session:
+        enabled: true
+        handler_id: null
     #    handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler
 
     #esi: true
