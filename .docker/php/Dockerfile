@@ -1,0 +1,37 @@
+FROM php:7.4-fpm
+ENV ACCEPT_EULA=Y
+
+RUN apt-get update \
+    && apt-get install -y gnupg \
+    && apt-get install -y --no-install-recommends \
+        locales \
+        apt-transport-https \
+    && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
+    && locale-gen \
+    && apt-get update \
+    && apt-get -y install \
+        libpng-dev \
+        libxml2-dev \
+        librabbitmq-dev \
+        libonig-dev \
+        libzip-dev \
+        libpq-dev \
+        mc
+
+
+RUN docker-php-ext-install mbstring pdo pdo_pgsql gd soap xml bcmath intl zip \
+    && pecl install apcu opcache amqp redis \
+    && docker-php-ext-enable apcu opcache amqp redis
+
+COPY php.ini /usr/local/etc/php/
+COPY .zshrc.dist /usr/local/custom/
+
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+    && php -r "unlink('composer-setup.php');"
+
+WORKDIR /code
+
+RUN apt-get install -y zsh git wget sudo \
+    && sudo sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" \
+    && cp /usr/local/custom/.zshrc.dist /root/.zshrc

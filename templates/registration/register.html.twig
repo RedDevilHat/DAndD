@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <main class="container bg-transparent">
+        <div class="text-body">
+            <div class="col-10">
+                <h1 class="h3 mb-3 font-weight-normal">Регистрация</h1>
+                {% for flashError in app.flashes('verify_email_error') %}
+                    <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+                {% endfor %}
+                {% if app.user %}
+                    <div class="mb-3">
+                        Ты уже пользователь: {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                {% endif %}
+
+
+                {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.username) }}
+                {{ form_row(registrationForm.plainPassword, {
+                    label: 'Password'
+                }) }}
+                {{ form_row(registrationForm.agreeTerms) }}
+
+                <button type="submit" class="btn btn-lg btn-primary">Зарегистрироваться</button>
+                <a class="btn btn-lg btn-secondary" href="{{ url('app_login') }}">Уже есть учетка? Войди!</a>
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
+    </main>
+{% endblock %}
