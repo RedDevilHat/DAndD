@@ -12,6 +12,7 @@ class CharacterController extends AbstractController
      */
     public function index()
     {
+        //TODO: Create character
         return $this->render('character/index.html.twig', [
             'controller_name' => 'CharacterController',
         ]);
