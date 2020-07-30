@@ -8,7 +8,7 @@ services:
       - ./.docker/nginx:/etc/nginx/conf.d
       - ./:/code
     ports:
-      - "8123:80"
+      - "80:80"
     depends_on:
       - php
 
@@ -33,4 +33,4 @@ services:
       POSTGRES_PASSWORD: main
       POSTGRES_DB: main
     ports:
-      - "32772:5432"
+      - [5432]
