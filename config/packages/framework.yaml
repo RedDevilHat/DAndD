@@ -17,3 +17,12 @@ framework:
     #fragments: true
     php_errors:
         log: true
+
+    http_client:
+        scoped_clients:
+            dnd:
+                base_uri: 'https://www.dnd5eapi.co/api/'
+                headers:
+                    Accept: 'application/json'
+                    Content-Type: 'application/json'
+                    User-Agent: 'free-dnd-client'
